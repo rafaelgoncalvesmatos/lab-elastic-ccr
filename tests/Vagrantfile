@@ -1,0 +1,26 @@
+
+configuracoes = {
+    "elastic1"   =>  { "images" => "centos/7", "ip" => "10", "memory" => "2048", "cpu" => "2" },
+    "elastic2"   =>  { "images" => "centos/7", "ip" => "20", "memory" => "2048", "cpu" => "2" },
+    "elastic3"   =>  { "images" => "centos/7", "ip" => "30", "memory" => "2048", "cpu" => "2" },
+  }
+  
+  Vagrant.configure("2") do |config|
+  
+    config.vm.box_check_update = false
+  
+    configuracoes.each do |nome,conf|
+      config.vm.define "#{nome}" do |maquina|
+        maquina.vm.box      = "#{conf["images"]}"
+        maquina.vm.hostname = "#{nome}.pensandoemlinux.com"
+        maquina.vm.network "private_network", ip: "192.168.87.#{conf["ip"]}"
+        maquina.vm.provision "shell",
+            inline: 'echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDh8hk+RFw7OSXHO7Cp7BwKsZF/dllt7rOTIwqqY2/mQtT2REw7DtpiYYz+VgSwHCtgYAtA4FKWFWGufotILDcJBG45bQzvMLPqujmI/vPH2cC34wipFoYdqviyEXUh2Jdhshkd5mNqCa/n237LCaViomUrFkAIa0EIp/p8EEkumsjV1ZwN80LyOw7r8N6yJPY//6FBHtSfmKgHLgzBozAl/M2cquNMdvDQdvavSlwsJmidLq8uS8bwxsebA/5se9h0lHNNlsxuEnvsZ1rQc8TN+KsBG6XiwPJdFGogSJwbVtbGGpKsCxEcPU+2kaK4TI37Mj+x0rM0vuEhC7aUyECzSNQm+UmZMNrE/6XCaySN1HLOd/jrq6pYDVgiI3LkzVHXaC3Lpw97UmZPbHZbP/dQRZEIW2OoHFDrHST0GBB9FtsBG3l5GCtNxJuL5L2vdQPVi3GZekh4pdEuGfyI3Irs4lY2en0u1efUL5psAH/1E4qKvMZu55sDvYswpXvHvSk=" >> /home/vagrant/.ssh/authorized_keys'      
+        maquina.vm.provider "virtualbox" do |customizando|
+            customizando.memory = conf["memory"]
+            customizando.cpus   = conf["cpu"]
+            customizando.name   = "#{nome}"
+        end
+      end
+    end
+  end

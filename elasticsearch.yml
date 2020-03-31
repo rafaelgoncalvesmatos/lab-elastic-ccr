@@ -1,0 +1,5 @@
+- hosts: elastic
+  become: true
+  roles:
+    - java
+    - elasticsearch
