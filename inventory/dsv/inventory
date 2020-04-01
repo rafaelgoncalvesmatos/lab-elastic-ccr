@@ -1,7 +1,20 @@
-[elastic]
+[hot-elastic]
 192.168.87.10
-# 192.168.87.20
-# 192.168.87.30
 
-[elastic:vars]
+[warn-elastic]
+192.168.87.20
+
+[cold-elastic]
+192.168.87.30
+
+[hot-elastic:vars]
+elastsicsearch_cluster_name=hot-cluster
+
+[warn-elastic:vars]
+elastsicsearch_cluster_name=warn-cluster
+
+[cold-elastic:vars]
+elastsicsearch_cluster_name=cold-cluster
+
+[all:vars]
 ansible_user=vagrant
