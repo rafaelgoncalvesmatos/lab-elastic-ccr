@@ -1,0 +1,21 @@
+---
+# tasks file for roles/common
+- name: Epel Repository
+  package:
+    name: epel-release
+    state: present
+
+- name: Package install
+  package:
+    name: [
+      'htop',
+      'vim',
+      'python',
+      'net-tools'
+    ]
+    state: present
+
+- name: install the 'Development tools' package group
+  yum:
+    name: "@Development tools"
+    state: present
