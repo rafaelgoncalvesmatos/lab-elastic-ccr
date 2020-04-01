@@ -1,2 +1,19 @@
 ---
 # tasks file for roles/kibana
+- name: Install Kibana
+  yum: 
+    name: kibana
+    state: present
+  notify: restart kibana
+
+- name: Configuration Kibana
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+  notify: restart kibana
+
+- name: Restart Kibana
+  systemd:
+    name: kibana
+    enabled: yes
+    daemon_reload: yes

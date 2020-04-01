@@ -1,0 +1,6 @@
+server.host: "0.0.0.0"
+server.name: "{{ ansible_hostname }}"
+
+logging.json: false
+
+elasticsearch.hosts: ["http://{{ ansible_hostname }}:9200"]
